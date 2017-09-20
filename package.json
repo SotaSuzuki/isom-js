@@ -1,0 +1,22 @@
+{
+  "name": "my-thaumoctopus-mimicus",
+  "version": "0.0.0",
+  "description": "An example of isomorphic javascript",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "transpile": "babel src/index.js --out-file dist/index.js"
+  },
+  "keywords": [
+    "isomophic"
+  ],
+  "author": "SotaSuzuki <3.3sota.suzuki@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "hapi": "16.6.0"
+  },
+  "devDependencies": {
+    "babel-cli": "6.26.0",
+    "babel-preset-es2015": "6.24.1"
+  }
+}
