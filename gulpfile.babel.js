@@ -11,8 +11,14 @@ gulp.task('compile', () => {
     .pipe(gulp.dest('dist'))
 })
 
+gulp.task('copy', () => {
+  return gulp.src('src/**/*.html')
+    .pipe(gulp.dest('dist'))
+})
+
 gulp.task('watch', () => {
   gulp.watch('src/**/*.js', ['compile'])
+  gulp.watch('src/**/*.html', ['copy', 'compile'])
 })
 
 gulp.task('start', () => {
@@ -25,5 +31,5 @@ gulp.task('start', () => {
 })
 
 gulp.task('default', (callback) => {
-  sequence(['compile', 'watch'], 'start', callback)
+  sequence(['compile', 'copy', 'watch'], 'start', callback)
 })
