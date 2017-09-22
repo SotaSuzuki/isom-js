@@ -14,13 +14,14 @@ server.connection({
 // ルーティングを設定する
 server.route({
   method: 'GET',
-  path: '/hello',
+  // path: '/hello/{fname}/{lname}',
+  path: '/hello/{name*}',
   handler: function (request, reply) {
     // テンプレートを読み込み、コンテキストのオブジェクトを与えてコンパイルする
-    nunjucks.render('index.html', {
-      fname: 'Sota',
-      lname: 'Suzuki'
-    }, function (err, html) {
+    console.log(request.params) // request.params でパスパラメーターを取得できる
+    console.log(request.query) // request.query でクエリ文字列へアクセスができる
+
+    nunjucks.render('index.html', getName(request), function (err, html) {
       reply(html)
     })
   }
@@ -28,3 +29,23 @@ server.route({
 
 // サーバーを開始する
 server.start()
+
+function getName (request) {
+  // デフォルト値を設定する
+  let name = {
+    fname: 'Sota',
+    lname: 'Suzuki'
+  }
+
+  // パスパラメーターを分解する
+  let nameParts = request.params.name ?  request.params.name.split('/') : [];
+
+  // 値の優先順位
+  // 1. パスパラメーター
+  // 2. クエリ文字列
+  // 3. デフォルト値
+  name.fname = (nameParts[0] || request.query.fname) || name.fname
+  name.lname = (nameParts[1] || request.query.lname) || name.lname
+
+  return name
+}
