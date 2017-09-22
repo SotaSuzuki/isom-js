@@ -1,7 +1,9 @@
 import Hapi from 'hapi'
+import Application from './lib'
+import HelloController from './hello-controller'
 import nunjucks from 'nunjucks'
 
-// Nunjucks がテンプレートを読み込むパスを設定する
+// Nunjucks がテンプレートを読み込むパス
 nunjucks.configure('./dist')
 
 // ホスト名とポート番号を指定してサーバーを作成する
@@ -11,41 +13,19 @@ server.connection({
   port: 8000
 })
 
-// ルーティングを設定する
-server.route({
-  method: 'GET',
-  // path: '/hello/{fname}/{lname}',
-  path: '/hello/{name*}',
-  handler: function (request, reply) {
-    // テンプレートを読み込み、コンテキストのオブジェクトを与えてコンパイルする
-    console.log(request.params) // request.params でパスパラメーターを取得できる
-    console.log(request.query) // request.query でクエリ文字列へアクセスができる
-
-    nunjucks.render('index.html', getName(request), function (err, html) {
-      reply(html)
+const application = new Application({
+  '/hello/{name*}': HelloController
+}, {
+  server: server,
+  document: function (application, controller, request, reply, body, callback) {
+    nunjucks.render('./index.html', { body: body }, (err, html) => {
+      if (err) {
+        return callback(err, null)
+      }
+      callback(null, html)
     })
   }
 })
 
 // サーバーを開始する
-server.start()
-
-function getName (request) {
-  // デフォルト値を設定する
-  let name = {
-    fname: 'Sota',
-    lname: 'Suzuki'
-  }
-
-  // パスパラメーターを分解する
-  let nameParts = request.params.name ?  request.params.name.split('/') : [];
-
-  // 値の優先順位
-  // 1. パスパラメーター
-  // 2. クエリ文字列
-  // 3. デフォルト値
-  name.fname = (nameParts[0] || request.query.fname) || name.fname
-  name.lname = (nameParts[1] || request.query.lname) || name.lname
-
-  return name
-}
+application.start()
