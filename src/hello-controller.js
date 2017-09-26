@@ -9,12 +9,7 @@ function getName(request) {
   }
 
   // パスパラメーターを分解する
-  let nameParts = request.params.name
-    ? request
-      .params
-      .name
-      .split('/')
-    : [];
+  let nameParts = request.params.name ? request.params.name.split('/') : [];
 
   // 値の優先順位
   // 1. パスパラメーター
@@ -29,7 +24,7 @@ function getName(request) {
 export default class HelloController extends Controller {
 
   toString (callback) {
-    nunjucks.renderString('<p>Hello, {{ fname }} {{ lname }}</p>', getName(this.context), (err, html) => {
+    nunjucks.renderString('Hello, {{ fname }} {{ lname }}', getName(this.context), (err, html) => {
       if (err) {
         return callback(err, null)
       }
