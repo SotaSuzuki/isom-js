@@ -13,7 +13,8 @@
   "author": "SotaSuzuki <3.3sota.suzuki@gmail.com>",
   "license": "MIT",
   "browser": {
-    "./src/index.js": "./src/index.client.js"
+    "./src/index.js": "./src/index.client.js",
+    "./src/lib/index.js": "./src/lib/index.client.js"
   },
   "dependencies": {
     "hapi": "16.6.0",

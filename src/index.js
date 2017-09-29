@@ -5,7 +5,9 @@ import HelloController from './hello-controller'
 import nunjucks from 'nunjucks'
 
 // Nunjucks がテンプレートを読み込むパス
-nunjucks.configure('./dist')
+nunjucks.configure('./dist', {
+  autoescape: false
+})
 
 // ホスト名とポート番号を指定してサーバーを作成する
 const server = new Hapi.Server()
