@@ -1,4 +1,4 @@
-import Controller from './lib/controller'
+import Controller from './lib/Controller'
 import nunjucks from 'nunjucks'
 
 function getName(request) {
