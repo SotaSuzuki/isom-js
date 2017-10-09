@@ -1,3 +1,4 @@
+import cookie from './cookie.client'
 import Call from 'call'
 import queryString from 'query-string'
 
@@ -43,7 +44,8 @@ export default class Application {
     if (route && Controller) {
       const controller = new Controller({
         query: queryString.parse(search),
-        params: params
+        params: params,
+        cookie: cookie
       })
 
       // リクエストとレスポンスを表すオブジェクト。ファサードはのちに実装する。

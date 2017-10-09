@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "call": "5.0.0",
+    "cookies-js": "1.2.3",
     "hapi": "16.6.0",
     "inert": "4.2.1",
     "nunjucks": "3.0.1",
